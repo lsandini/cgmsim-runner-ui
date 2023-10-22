@@ -2,16 +2,57 @@
   "name": "cgmsim-runner-ui",
   "version": "1.0.0",
   "description": "A cgmsim-runner with UI",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "electron-forge start",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "repository": "https://github.com/nickxbs/cgmsim-runner-ui",
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Nicola Febbrari",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "asarUnpack": [
+          "node_modules/@lsandini/cgmsim-lib/**"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "cgmsim-runner"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": "https://github.com/nickxbs/cgmsim-runner-ui"
+          }
+        }
+      ]
+    }
+  },
   "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
     "@types/node": "^20.8.7",
     "@types/node-cron": "^3.0.10",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
@@ -23,7 +64,9 @@
   "dependencies": {
     "@electron/remote": "^2.0.12",
     "@lsandini/cgmsim-lib": "^0.1.11",
+       "electron-squirrel-startup": "^1.0.0",
     "node-cron": "^3.0.2",
     "ts-dotenv": "^0.9.1"
-  }
+  },
+  "license": "MIT"
 }

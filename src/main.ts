@@ -4,6 +4,10 @@ import * as dotenv from 'dotenv';
 import { EnvParam, GenderType } from '@lsandini/cgmsim-lib/dist/Types';
 import { startCron } from './run';
 import * as cron from 'node-cron';
+if (require('electron-squirrel-startup')) {
+	app.quit();
+}
+
 let mainWindow: BrowserWindow;
 let formWindow: BrowserWindow | null = null;
 let tray: Tray | null;
