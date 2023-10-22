@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Console Linux Style</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: monospace;
+            padding: 10px;
+        }
+        
+        .console {
+            border: 1px solid #00ff00;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+        
+        .prompt {
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="console" id="console">
+        <div>Welcome to the CGMSIM Console</div>
+        <div class="prompt">user@localhost:~$</div>
+    </div>
+    
+	<script src="./src/renderer.js"></script>
+
+</body>
+</html>
