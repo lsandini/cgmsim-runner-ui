@@ -68,21 +68,19 @@ function createWindow() {
 	});
 	tray = new Tray(icon);
 
-	tray.addListener('mouse-up', () => {});
 	const contextMenu = Menu.buildFromTemplate([
 		{
 			label: 'Start',
 			type: 'normal',
 			click: () => {
-				scheduler.start()
+				scheduler.start();
 			},
 		},
 		{
 			label: 'Stop',
 			type: 'normal',
 			click: () => {
-				scheduler.stop()
-
+				scheduler.stop();
 			},
 		},
 	]);
@@ -90,8 +88,19 @@ function createWindow() {
 	// and load the index.html of the app.
 	mainWindow.loadFile(path.join(__dirname, '../index.html'));
 
+	// Handle window close event
+	mainWindow.on('close', (event) => {
+		// Prevent the default close behavior
+		event.preventDefault();
+		// Hide the window instead
+		mainWindow.hide();
+	});
+	// Handle double-click on the tray icon
+	tray.on('double-click', () => {
+		mainWindow.show();
+	});
 	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 	ipcMain.on('im-ready', (event, data) => {
 		scheduler = startCron(event.sender);
 		event.sender.send('start');
@@ -111,9 +120,7 @@ function createFormWindow() {
 	});
 
 	ipcMain.on('form-submission', (event, data) => {
-		// Esegui azioni basate sui dati della form
 		console.log('Dati della form ricevuti:', data);
-		// Puoi anche inviare una risposta alla finestra che ha inviato la form
 		event.sender.send('form-submission-reply', 'Dati ricevuti con successo!');
 	});
 }
