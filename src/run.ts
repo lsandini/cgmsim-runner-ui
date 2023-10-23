@@ -40,7 +40,7 @@ const defaultEnv: EnvRunner = {
 	TP: '75',
 	WEIGHT: '90',
 };
-const readEnv = (): EnvRunner => {
+export const readEnv = (): EnvRunner => {
 	try {
 		const data = fs.readFileSync(ENV_FILE_NAME, 'utf8');
 		const parsedData = JSON.parse(data);
@@ -50,7 +50,7 @@ const readEnv = (): EnvRunner => {
 	}
 };
 
-const saveEnv = (env: EnvRunner) => {
+export const saveEnv = (env: EnvRunner) => {
 	const data = JSON.stringify(env);
 
 	fs.writeFile(ENV_FILE_NAME, data, 'utf8', (err) => {
@@ -135,6 +135,7 @@ export const startCron = (render: Electron.WebContents): cron.ScheduledTask => {
 			console.error(e);
 		}
 	}
+	run();
 	// Schedule the 'run' function to run periodically with node-cron
 	const cronJob = cron.schedule(`*/5 * * * *`, run); // Periodic execution. First run after 5 minutes.
 	cronJob.start();

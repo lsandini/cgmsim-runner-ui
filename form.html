@@ -1,58 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Modulo</title>
-	<!-- Aggiungi questo script alla fine di form.html -->
-<script>
-    document.querySelector('form').addEventListener('submit', function (e) {
-        e.preventDefault(); // Evita il comportamento predefinito dell'invio del modulo
-
-        const name = document.querySelector('#name').value;
-        const email = document.querySelector('#email').value;
-
-        // Fai qualcosa con i dati (ad esempio, invialo al processo principale tramite IPC)
-        // Ad esempio, invia i dati alla finestra principale:
-        require('electron').ipcRenderer.send('form-submission', { name, email });
-    });
-</script>
-
+    <title>Settings</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <form>
-        <label for="ISF">ISF:</label>
-        <input type="text" id="ISF" name="ISF" value="30"><br><br>
+        <h1>Settings</h1>
 
-        <label for="CR">CR:</label>
-        <input type="text" id="CR" name="CR" value="10"><br><br>
+        <label for="ISF">Insulin Sensitivity Factor (ISF):</label>
+        <input type="text" id="ISF" name="ISF" /><br />
 
-        <label for="WEIGHT">WEIGHT:</label>
-        <input type="text" id="WEIGHT" name="WEIGHT" value="90"><br><br>
+        <label for="CR">Carb Ratio (CR):</label>
+        <input type="text" id="CR" name="CR" /><br />
 
-        <label for="TP">TP:</label>
-        <input type="text" id="TP" name="TP" value="75"><br><br>
+        <label for="WEIGHT">Weight (WEIGHT):</label>
+        <input type="text" id="WEIGHT" name="WEIGHT" /><br />
 
-        <label for="DIA">DIA:</label>
-        <input type="text" id="DIA" name="DIA" value="6"><br><br>
+        <label for="TP">Time of Peak (TP):</label>
+        <input type="text" id="TP" name="TP" /><br />
 
-        <label for="CARBS_ABS_TIME">CARBS_ABS_TIME:</label>
-        <input type="text" id="CARBS_ABS_TIME" name="CARBS_ABS_TIME" value="360"><br><br>
+        <label for="DIA">Duration of Insulin Action (DIA):</label>
+        <input type="text" id="DIA" name="DIA" /><br />
 
-        <label for="APISECRET">APISECRET:</label>
-        <input type="text" id="APISECRET" name="APISECRET" value="change_me_please!"><br><br>
+        <label for="CARBS_ABS_TIME">Carb Absorption Time (CARBS_ABS_TIME):</label>
+        <input type="text" id="CARBS_ABS_TIME" name="CARBS_ABS_TIME" /><br />
 
-        <label for="NIGHTSCOUT_URL">NIGHTSCOUT_URL:</label>
-        <input type="text" id="NIGHTSCOUT_URL" name="NIGHTSCOUT_URL" value="https://nicola6.oracle.cgmsim.com"><br><br>
+        <label for="APISECRET">API Secret (APISECRET):</label>
+        <input type="text" id="APISECRET" name="APISECRET" /><br />
 
-        <label for="LOG_LEVEL">LOG_LEVEL:</label>
-        <input type="text" id="LOG_LEVEL" name="LOG_LEVEL" value="debug"><br><br>
+        <label for="NIGHTSCOUT_URL">Nightscout URL (NIGHTSCOUT_URL):</label>
+        <input type="text" id="NIGHTSCOUT_URL" name="NIGHTSCOUT_URL" /><br />
 
-        <label for="AGE">AGE:</label>
-        <input type="text" id="AGE" name="AGE" value="30"><br><br>
+        <label for="LOG_LEVEL">Log Level (LOG_LEVEL):</label>
+        <input type="text" id="LOG_LEVEL" name="LOG_LEVEL" /><br />
 
-        <label for="GENDER">GENDER:</label>
-        <input type="text" id="GENDER" name="GENDER" value="Male"><br><br>
+        <label for="AGE">Age (AGE):</label>
+        <input type="text" id="AGE" name="AGE" /><br />
 
-        <input type="submit" value="Salva">
+        <label for="GENDER">Gender (GENDER):</label>
+        <select id="GENDER" name="GENDER">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select><br />
+
+        <input type="submit" value="Save" />
     </form>
+    <script src="./src/rendererForm.js"></script>
 </body>
 </html>

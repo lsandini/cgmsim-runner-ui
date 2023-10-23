@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain } from 'electron';
-import { startCron } from './run';
+import { readEnv, saveEnv, startCron } from './run';
 import * as cron from 'node-cron';
 if (require('electron-squirrel-startup')) {
 	app.quit();
@@ -9,7 +9,7 @@ if (require('electron-squirrel-startup')) {
 let mainWindow: BrowserWindow;
 let formWindow: BrowserWindow | null = null;
 let tray: Tray | null;
-
+let logger: Electron.WebContents;
 let scheduler: cron.ScheduledTask;
 function createWindow() {
 	// Create the browser window.
@@ -19,8 +19,8 @@ function createWindow() {
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 			plugins: true,
-			nodeIntegration: true, // Abilita Node.js nell'ambiente di rendering
-			contextIsolation: false, // Disabilita l'isolamento di contesto
+			nodeIntegration: true,
+			contextIsolation: false,
 		},
 
 		width: 800,
@@ -37,16 +37,12 @@ function createWindow() {
 					},
 				},
 				{
-					label: 'Esci',
+					label: 'Exit',
 					click() {
-						app.quit(); 
+						app.quit();
 					},
 				},
 			],
-		},
-		{
-			label: 'Modifica',
-			submenu: [{ role: 'cut' }, { role: 'copy' }, { role: 'paste' }],
 		},
 	];
 
@@ -72,17 +68,10 @@ function createWindow() {
 
 	const contextMenu = Menu.buildFromTemplate([
 		{
-			label: 'Start',
+			label: 'Exit',
 			type: 'normal',
 			click: () => {
-				scheduler.start();
-			},
-		},
-		{
-			label: 'Stop',
-			type: 'normal',
-			click: () => {
-				scheduler.stop();
+				app.quit();
 			},
 		},
 	]);
@@ -104,8 +93,9 @@ function createWindow() {
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools();
 	ipcMain.on('im-ready', (event, data) => {
-		if(!scheduler){
-			scheduler = startCron(event.sender);
+		if (!scheduler) {
+			logger = event.sender;
+			scheduler = startCron(logger);
 		}
 		event.sender.send('start');
 	});
@@ -116,16 +106,32 @@ function createFormWindow() {
 		return;
 	}
 
-	formWindow = new BrowserWindow({ width: 400, height: 300 });
+	formWindow = new BrowserWindow({
+		width: 400,
+		height: 300,
+		webPreferences: {
+			preload: path.join(__dirname, 'preloadForm.js'),
+			plugins: true,
+			nodeIntegration: true,
+			contextIsolation: false,
+		},
+	});
 	formWindow.loadFile(path.join(__dirname, '../form.html'));
 
 	formWindow.on('closed', () => {
 		formWindow = null;
 	});
+	// formWindow.webContents.openDevTools();
 
+	ipcMain.on('im-readyForm', (event, data) => {
+		const params = readEnv();
+		event.sender.send('startForum', params);
+	});
 	ipcMain.on('form-submission', (event, data) => {
-		console.log('Dati della form ricevuti:', data);
-		event.sender.send('form-submission-reply', 'Dati ricevuti con successo!');
+		saveEnv(data);
+		console.log('data', data);
+		logger.send('log', 'Params saved!');
+		formWindow.close();
 	});
 }
 // This method will be called when Electron has finished
@@ -146,8 +152,8 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on('before-quit', function (evt) {
 	mainWindow.destroy();
-	formWindow.destroy()
-    tray.destroy();
+	formWindow.destroy();
+	tray.destroy();
 });
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
