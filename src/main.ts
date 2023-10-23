@@ -1,7 +1,5 @@
 import * as path from 'path';
 import { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain } from 'electron';
-import * as dotenv from 'dotenv';
-import { EnvParam, GenderType } from '@lsandini/cgmsim-lib/dist/Types';
 import { startCron } from './run';
 import * as cron from 'node-cron';
 if (require('electron-squirrel-startup')) {
@@ -41,7 +39,7 @@ function createWindow() {
 				{
 					label: 'Esci',
 					click() {
-						app.quit(); // Chiudi l'applicazione
+						app.quit(); 
 					},
 				},
 			],
@@ -106,7 +104,9 @@ function createWindow() {
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools();
 	ipcMain.on('im-ready', (event, data) => {
-		scheduler = startCron(event.sender);
+		if(!scheduler){
+			scheduler = startCron(event.sender);
+		}
 		event.sender.send('start');
 	});
 }
@@ -144,6 +144,11 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
+app.on('before-quit', function (evt) {
+	mainWindow.destroy();
+	formWindow.destroy()
+    tray.destroy();
+});
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit();
