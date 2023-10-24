@@ -9,7 +9,8 @@
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run build && electron-forge start",
     "package": "npm run build && electron-forge package",
-    "make": "npm run build && electron-forge make"
+    "make": "npm run build && electron-forge make",
+    "publish": "npm run build && electron-forge publish"
   },
   "repository": "https://github.com/nickxbs/cgmsim-runner-ui",
   "author": "Nicola Febbrari",
