@@ -11,6 +11,7 @@ let formWindow: BrowserWindow | null = null;
 let tray: Tray | null;
 let logger: Electron.WebContents;
 let scheduler: cron.ScheduledTask;
+
 function createWindow() {
 	// Create the browser window.
 	let icon16 = nativeImage.createFromDataURL(
@@ -96,7 +97,7 @@ function createWindow() {
 		mainWindow.show();
 	});
 	// Open the DevTools.
-	// mainWindow.webContents.openDevTools();
+	mainWindow.webContents.openDevTools();
 	ipcMain.on('im-ready', (event, data) => {
 		if (!scheduler) {
 			logger = event.sender;
