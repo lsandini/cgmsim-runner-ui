@@ -13,7 +13,7 @@ ipcRenderer.send('im-ready', 'Dati da inviare');
 
 // Gestisci la risposta dal processo principale
 ipcRenderer.on('log1', (event, message) => {
-		addToConsole(message);
+	addToConsole(message);
 });
 
 ipcRenderer.on('log2', (event, message) => {
