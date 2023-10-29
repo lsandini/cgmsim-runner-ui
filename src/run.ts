@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-
 import {
 	simulator,
 	downloads,
@@ -10,6 +9,7 @@ import {
 } from '@lsandini/cgmsim-lib';
 import * as cron from 'node-cron';
 import { GenderType } from '@lsandini/cgmsim-lib/dist/Types';
+import { getPerlin } from './perlin';
 
 // Define a type for environment variables
 type EnvRunner = {
@@ -100,6 +100,9 @@ export const startCron = (render: Electron.WebContents): cron.ScheduledTask => {
 						svgs = [...svgs, 90, 90, 90];
 					}
 
+					const noise = getPerlin();
+					const sgv = noise.noise * 18 * 6 + newEntry.sgv;
+
 					// Calculate the direction using arrows
 					const { direction } = arrows(newEntry.sgv, svgs[0], svgs[1], svgs[2]);
 
@@ -130,6 +133,7 @@ export const startCron = (render: Electron.WebContents): cron.ScheduledTask => {
 
 					const colorizedSgv = logSgv(newEntry.sgv);
 					render.send('log', 'sgv ' + newEntry.sgv);
+					render.send('noise', 'added noise ' + (noise.noise * 18 * 6).toFixed(0));
 
 
 

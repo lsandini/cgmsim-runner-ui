@@ -20,6 +20,10 @@ ipcRenderer.on('log2', (event, message) => {
     addToConsole(message);
 });
 
+ipcRenderer.on('noise', (event, message) => {
+    addToConsole(message);
+});
+
 ipcRenderer.on('log', (event, message) => {
     const [text, sgvValue] = message.split(' ');
 
