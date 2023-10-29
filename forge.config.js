@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { configure: squirrelConfig } = require('electron-squirrel-startup');
 
 module.exports = {

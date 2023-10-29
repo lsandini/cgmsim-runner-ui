@@ -1,45 +1,35 @@
 {
-  "name": "cgmsim-runner-ui",
-  "version": "1.0.0",
-  "description": "A cgmsim-runner with UI",
-  "main": "src/main.js",
-  "icon":"./assets/icon32.ico",
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
-  },
-  "repository": "https://github.com/nickxbs/cgmsim-runner-ui",
-  "author": "Nicola Febbrari",
-  "devDependencies": {
-    "@electron-forge/cli": "^6.4.2",
-    "@electron-forge/maker-deb": "^6.4.2",
-    "@electron-forge/maker-rpm": "^6.4.2",
-    "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
-    "@types/electron": "^1.6.10",
-    "@types/node": "^20.8.7",
-    "@types/node-cron": "^3.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "electron": "^24.3.0",
-    "eslint": "^7.32.0",
-    "typescript": "^4.8.3"
-  },
-  "dependencies": {
-    "@electron/remote": "^2.0.12",
-    "@lsandini/cgmsim-lib": "^0.1.11",
-    "electron-squirrel-startup": "^1.0.0",
-    "fs": "^0.0.1-security",
-    "node-cron": "^3.0.2",
-    "perlin-noise": "^0.0.1",
-    "ts-dotenv": "^0.9.1"
-  },
-  
-  "license": "MIT"
+	"name": "cgmsim-runner-ui",
+	"version": "1.0.0",
+	"description": "A cgmsim-runner with UI",
+	"main": "src/main.js",
+	"icon": "./assets/icon32.ico",
+	"scripts": {
+		"lint": "eslint -c .eslintrc --ext .js ./src",
+		"start": "electron-forge start",
+		"package": "electron-forge package",
+		"make": "electron-forge make",
+		"publish": "electron-forge publish"
+	},
+	"repository": "https://github.com/nickxbs/cgmsim-runner-ui",
+	"author": "Nicola Febbrari",
+	"devDependencies": {
+		"@electron-forge/cli": "^6.4.2",
+		"@electron-forge/maker-deb": "^6.4.2",
+		"@electron-forge/maker-rpm": "^6.4.2",
+		"@electron-forge/maker-squirrel": "^6.4.2",
+		"@electron-forge/maker-zip": "^6.4.2",
+		"@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
+		"electron": "^24.3.0",
+		"eslint": "^7.32.0"
+	},
+	"dependencies": {
+		"@electron/remote": "^2.0.12",
+		"@lsandini/cgmsim-lib": "^0.1.11",
+		"electron-squirrel-startup": "^1.0.0",
+		"fs": "^0.0.1-security",
+		"node-cron": "^3.0.2",
+		"perlin-noise": "^0.0.1"
+	},
+	"license": "MIT"
 }

@@ -104,7 +104,7 @@ const createWindow = () => {
 	});
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools();
-	ipcMain.on('im-ready', (event, data) => {
+	ipcMain.on('im-ready', (event) => {
 		if (!scheduler) {
 			logger = event.sender;
 			scheduler = startCron(logger);
@@ -135,7 +135,7 @@ const createFormWindow = () => {
 	});
 	// formWindow.webContents.openDevTools();
 
-	ipcMain.on('im-readyForm', (event, data) => {
+	ipcMain.on('im-readyForm', (event) => {
 		const params = readEnv();
 		event.sender.send('startForum', params);
 	});
@@ -162,7 +162,7 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('before-quit', function (evt) {
+app.on('before-quit', function () {
 	mainWindow.destroy();
 	formWindow.destroy();
 	tray.destroy();
