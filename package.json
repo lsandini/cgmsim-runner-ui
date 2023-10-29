@@ -2,49 +2,19 @@
   "name": "cgmsim-runner-ui",
   "version": "1.0.0",
   "description": "A cgmsim-runner with UI",
-  "main": "dist/main.js",
+  "main": "src/main.js",
+  "icon":"./assets/icon32.ico",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron-forge start",
-    "package": "npm run build && electron-forge package",
-    "make": "npm run build && electron-forge make",
-    "publish": "npm run build && electron-forge publish"
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "repository": "https://github.com/nickxbs/cgmsim-runner-ui",
   "author": "Nicola Febbrari",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "asarUnpack": [
-          "node_modules/@lsandini/cgmsim-lib/**"
-        ]
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "cgmsim-runner"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": "https://github.com/nickxbs/cgmsim-runner-ui"
-          }
-        }
-      ]
-    }
-  },
   "devDependencies": {
     "@electron-forge/cli": "^6.4.2",
     "@electron-forge/maker-deb": "^6.4.2",
@@ -70,5 +40,6 @@
     "perlin-noise": "^0.0.1",
     "ts-dotenv": "^0.9.1"
   },
+  
   "license": "MIT"
 }
