@@ -97,7 +97,7 @@ function createWindow() {
 		mainWindow.show();
 	});
 	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 	ipcMain.on('im-ready', (event, data) => {
 		if (!scheduler) {
 			logger = event.sender;

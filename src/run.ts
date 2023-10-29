@@ -128,7 +128,7 @@ export const startCron = (render: Electron.WebContents): cron.ScheduledTask => {
 						}else{
 							formattedSgv = `\x1b[32m${formattedSgv}\x1b[0m at ` + now; // 32 is the ANSI code for green
 						}
-						console.log('colorized sgv:', formattedSgv);
+						console.log('sgv:', formattedSgv);
 					}
 
 					const colorizedSgv = logSgv(newEntry.sgv);
