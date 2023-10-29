@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline';">
+
     <title>Console Linux Style</title>
     <style>
         body {
@@ -20,15 +22,26 @@
         .prompt {
             color: #00ff00;
         }
+
+        .red-text {
+        color: red;
+        }
+
+        .yellow-text {
+            color: yellow;
+        }
+
+        .green-text {
+            color: #00ff00;;
+        }
     </style>
 </head>
 <body>
     <div class="console" id="console">
         <div>Welcome to the CGMSIM Console</div>
-        <div class="prompt">user@localhost:~$</div>
+        <!-- <div class="prompt">user@localhost:~$ </div> -->
     </div>
     
 	<script src="./src/renderer.js"></script>
-
 </body>
 </html>

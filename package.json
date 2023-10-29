@@ -67,6 +67,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "fs": "^0.0.1-security",
     "node-cron": "^3.0.2",
+    "perlin-noise": "^0.0.1",
     "ts-dotenv": "^0.9.1"
   },
   "license": "MIT"
