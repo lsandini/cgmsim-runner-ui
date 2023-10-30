@@ -1,4 +1,6 @@
 deploy.sh
+tsconfig.json
+noise.json
 
 # Logs
 logs
