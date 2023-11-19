@@ -85,7 +85,7 @@ const saveEnv = (env) => {
 				}
 
 				const noise = getPerlin();
-				const sgv = noise.noise * 18 * 6 + newEntry.sgv;
+				const sgv = Math.round(noise.noise * 18 * 6 + newEntry.sgv);
 
 				// Calculate the direction using arrows
 				const { direction } = arrows(sgv, svgs[0], svgs[1], svgs[2]);
