@@ -1,51 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Settings</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <form>
-        <h1>Settings</h1>
+	<head>
+		<title>Settings</title>
+		<link rel="stylesheet" type="text/css" href="./src/style.css" />
+	</head>
+	<body>
+		<form>
+			<h1>Settings</h1>
+			<div class="form-container">
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="ISF" name="ISF"  />
+					<label for="ISF">Insulin Sensitivity Factor (ISF):</label>
+				</div>
 
-        <label for="ISF">Insulin Sensitivity Factor (ISF):</label>
-        <input type="text" id="ISF" name="ISF" /><br />
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="CR" name="CR" /><br />
+					<label for="CR">Carb Ratio (CR):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="WEIGHT" name="WEIGHT" /><br />
+					<label for="WEIGHT">Weight (WEIGHT):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="TP" name="TP" /><br />
+					<label for="TP">Time of Peak (TP):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="DIA" name="DIA" /><br />
+					<label for="DIA">Duration of Insulin Action (DIA):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="CARBS_ABS_TIME" name="CARBS_ABS_TIME" /><br />
+					<label for="CARBS_ABS_TIME">Carb Absorption Time (CARBS_ABS_TIME):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="APISECRET" name="APISECRET" /><br />
+					<label for="APISECRET">API Secret (APISECRET):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="NIGHTSCOUT_URL" name="NIGHTSCOUT_URL" /><br />
+					<label for="NIGHTSCOUT_URL">Nightscout URL (NIGHTSCOUT_URL):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="LOG_LEVEL" name="LOG_LEVEL" /><br />
+					<label for="LOG_LEVEL">Log Level (LOG_LEVEL):</label>
+				</div>
+				<div class="form-label-group">
+					<input type="text" class="form-control"  id="AGE" name="AGE" /><br />
+					<label for="AGE">Age (AGE):</label>
+				</div>
+				<div class="form-label-group">
+					<select id="GENDER" name="GENDER">
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select>
+					<label for="GENDER">Gender (GENDER):</label>
+				</div>
+			</div>
 
-        <label for="CR">Carb Ratio (CR):</label>
-        <input type="text" id="CR" name="CR" /><br />
-
-        <label for="WEIGHT">Weight (WEIGHT):</label>
-        <input type="text" id="WEIGHT" name="WEIGHT" /><br />
-
-        <label for="TP">Time of Peak (TP):</label>
-        <input type="text" id="TP" name="TP" /><br />
-
-        <label for="DIA">Duration of Insulin Action (DIA):</label>
-        <input type="text" id="DIA" name="DIA" /><br />
-
-        <label for="CARBS_ABS_TIME">Carb Absorption Time (CARBS_ABS_TIME):</label>
-        <input type="text" id="CARBS_ABS_TIME" name="CARBS_ABS_TIME" /><br />
-
-        <label for="APISECRET">API Secret (APISECRET):</label>
-        <input type="text" id="APISECRET" name="APISECRET" /><br />
-
-        <label for="NIGHTSCOUT_URL">Nightscout URL (NIGHTSCOUT_URL):</label>
-        <input type="text" id="NIGHTSCOUT_URL" name="NIGHTSCOUT_URL" /><br />
-
-        <label for="LOG_LEVEL">Log Level (LOG_LEVEL):</label>
-        <input type="text" id="LOG_LEVEL" name="LOG_LEVEL" /><br />
-
-        <label for="AGE">Age (AGE):</label>
-        <input type="text" id="AGE" name="AGE" /><br />
-
-        <label for="GENDER">Gender (GENDER):</label>
-        <select id="GENDER" name="GENDER">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select><br />
-
-        <input type="submit" value="Save" />
-    </form>
-    <script src="./src/rendererForm.js"></script>
-</body>
+			<input type="submit" value="Save" />
+		</form>
+		<script src="./src/rendererForm.js"></script>
+	</body>
 </html>

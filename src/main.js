@@ -103,7 +103,7 @@ const createWindow = () => {
 		mainWindow.show();
 	});
 	// Open the DevTools.
-	// mainWindow.webContents.openDevTools();
+	mainWindow.webContents.openDevTools();
 	ipcMain.on('im-ready', (event) => {
 		if (!scheduler) {
 			logger = event.sender;
@@ -119,8 +119,8 @@ const createFormWindow = () => {
 	}
 
 	formWindow = new BrowserWindow({
-		width: 400,
-		height: 300,
+		width: 800,
+		height: 600,
 		webPreferences: {
 			preload: path.join(__dirname, 'preloadForm.js'),
 			plugins: true,
@@ -128,6 +128,7 @@ const createFormWindow = () => {
 			contextIsolation: false,
 		},
 	});
+	formWindow.webContents.openDevTools()
 	formWindow.loadFile(path.join(__dirname, '../form.html'));
 
 	formWindow.on('closed', () => {
