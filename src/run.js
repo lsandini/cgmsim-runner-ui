@@ -48,14 +48,16 @@ const saveEnv = (env) => {
 };
 // Read environment variables and type them
 
- const startCron = (render) => {
+const startCron = (render) => {
 	// dotenv.config();
 	// const env = process.env as EnvRunner;
-	let env = readEnv();
-	if (!env) {
+	let _readEnv = readEnv();
+	if (!_readEnv) {
 		saveEnv(defaultEnv);
-		env = defaultEnv;
+		_readEnv = defaultEnv;
 	}
+	let env = { ...defaultEnv, ..._readEnv };
+	console.log('env', env);
 
 	const logLevel = env.LOG_LEVEL;
 	render.send('log1', 'CGMSIM started!');
@@ -97,29 +99,31 @@ const saveEnv = (env) => {
 						direction,
 					},
 					env.NIGHTSCOUT_URL,
-					env.APISECRET
+					env.APISECRET,
 				);
 
 				const now = new Date().toLocaleTimeString();
 
-				function logSgv(sgv) {
-					let formattedSgv = sgv.toString();
+				function logSgv(formattedSgv) {
+					let _logSgv = '';
 					if (sgv < 55 || sgv > 240) {
 						// Apply red color using ANSI escape codes
-						formattedSgv = `\x1b[31m${formattedSgv}\x1b[0m at ` + now; // 31 is the ANSI code for red
+						_logSgv = `\x1b[31m sgv ${formattedSgv} at ${now} \x1b[0m`; // 31 is the ANSI code for red
 					} else if (sgv < 75 || sgv > 180) {
-						formattedSgv = `\x1b[33m${formattedSgv}\x1b[0m at ` + now; // 33 is the ANSI code for yellow
+						_logSgv = `\x1b[33m sgv ${formattedSgv} at ${now} \x1b[0m at `; // 33 is the ANSI code for yellow
 					} else {
-						formattedSgv = `\x1b[32m${formattedSgv}\x1b[0m at ` + now; // 32 is the ANSI code for green
+						_logSgv = `\x1b[32m sgv${formattedSgv} at ${now} \x1b[0m at `; // 32 is the ANSI code for green
 					}
-					console.log('sgv:', formattedSgv);
+					return _logSgv;
 				}
-
-				const colorizedSgv = logSgv(sgv);
-				render.send('log', 'sgv ' + sgv);
+				let formattedSgv = sgv.toFixed(0);
+				const colorizedSgv = logSgv(formattedSgv);
+				console.log('sgv:', colorizedSgv);
+				// console.log('formattedSgv:', formattedSgv);
+				render.send('log', formattedSgv);
 				render.send(
 					'noise',
-					'added noise ' + (noise.noise * 18 * 6).toFixed(0)
+					'added noise ' + (noise.noise * 18 * 6).toFixed(0),
 				);
 
 				// If log level is 'debug', upload additional notes
@@ -149,4 +153,4 @@ module.exports = {
 	readEnv,
 	saveEnv,
 	startCron,
-  };
+};

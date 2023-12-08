@@ -17,6 +17,7 @@ ipcRenderer.on('startForum', (event, params) => {
 	for (const p in env) {
 		const el = document.getElementById(p);
 		el.value = env[p];
+		console.log('###', p, env[p]);
 	}
 });
 ipcRenderer.send('im-readyForm');
