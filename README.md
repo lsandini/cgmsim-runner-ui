@@ -29,7 +29,7 @@ npm start
 Run the make script:
 
 ```bash
-npm run start
+npm run make
 ```
 
 _Please be aware that this package is not signed. In some cases, this may lead to antivirus software blocking the execution or causing errors within the program. If you encounter any issues, we recommend checking your antivirus settings and ensuring that our application is whitelisted._
