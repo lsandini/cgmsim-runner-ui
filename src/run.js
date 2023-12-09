@@ -116,14 +116,14 @@ const startCron = (render) => {
 					}
 					return _logSgv;
 				}
-				let formattedSgv = sgv.toFixed(0);
+				let formattedSgv = Math.round(sgv).toFixed(0);
 				const colorizedSgv = logSgv(formattedSgv);
 				console.log('sgv:', colorizedSgv);
 				// console.log('formattedSgv:', formattedSgv);
 				render.send('log', formattedSgv);
 				render.send(
 					'noise',
-					'added noise ' + (noise.noise * 18 * 6).toFixed(0),
+					'added noise ' + Math.round(noise.noise * 18 * 6).toFixed(0),
 				);
 
 				// If log level is 'debug', upload additional notes
