@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self';" />
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self';" /> -->
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-abc123' 'nonce-def456'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
 
 		<title>CGMSIM runner</title>
+
 		<style>
 			body {
 				background-color: #000;
@@ -12,21 +14,59 @@
 				padding: 10px;
 			}
 		</style>
-		<link rel="stylesheet" type="text/css" href="./src/style.css" />
+
+		<!-- Bootstrap CSS -->
+		<!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="./src/bootstrap.min.css">
+
+		<!-- Custom Stylesheet -->
+		<!-- <link rel="stylesheet" type="text/css" href="./src/style.css" /> -->
 	</head>
+
+
 	<body>
 		<!--header-->
 		<h2 class="main-title">CGMSIM v.3 Runner</h2>
-		<div class="canvas"></div>
+
+		<div class="canvas" style="border-color:#00ff00; border: 2px">CANVAS HERE</div>
 
 		<!--main section-->
 		<section class="bg-texture hero pt-5">
+
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="checkbox" id="themeSwitch">
+				<label class="form-check-label" for="themeSwitch">Toggle Dark Mode</label>
+			</div>
+
 			<div class="console" id="console">
 				<div>Welcome to the CGMSIM Console</div>
 				<!-- <div class="prompt">user@localhost:~$ </div> -->
 			</div>
 
-			<script src="./src/renderer.js"></script>
+			  <!-- You can also require other files to run in this process -->
+  			<script nonce="abc123" src="./src/renderer.js"></script>
+
+			<!-- <script src="./src/renderer.js"></script> -->
 		</section>
+		<script nonce="def456">
+			const themeSwitch = document.getElementById('themeSwitch');
+		  
+			// Check local storage for saved theme preference
+			if (localStorage.getItem('theme') === 'dark') {
+			  document.body.classList.add('dark-theme');
+			  themeSwitch.checked = true;
+			}
+		  
+			// Event listener for the theme switch
+			themeSwitch.addEventListener('change', () => {
+			  if (themeSwitch.checked) {
+				document.body.classList.add('dark-theme');
+				localStorage.setItem('theme', 'dark');
+			  } else {
+				document.body.classList.remove('dark-theme');
+				localStorage.setItem('theme', 'light');
+			  }
+			});
+		  </script>
 	</body>
 </html>

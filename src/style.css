@@ -92,6 +92,11 @@ body {
 	background-color: #fff;
 }
 
+.dark-theme {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+
 [tabindex='-1']:focus {
 	outline: 0 !important;
 }
