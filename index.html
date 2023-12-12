@@ -12,12 +12,12 @@
 				color: #00ff00;
 				font-family: monospace;
 				padding: 10px;
-			}
+			}	
 		</style>
 
 		<!-- Bootstrap CSS -->
 		<!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
-		<link rel="stylesheet" href="./src/bootstrap.css">
+		<link rel="stylesheet" href="./src/style-short.css">
 
 		<!-- Custom Stylesheet -->
 		<!-- <link rel="stylesheet" type="text/css" href="./src/style.css" /> -->
@@ -28,14 +28,14 @@
 		<!--header-->
 		<h2 class="main-title">CGMSIM v.3 Runner</h2>
 
-		<div class="canvas" style="border-color:#00ff00; border: 2px">CANVAS HERE</div>
+		<!-- <div class="canvas" style="border-color:#00ff00; border: 2px">CANVAS HERE</div> -->
 
 		<!--main section-->
 		<section class="bg-texture hero pt-5">
 
-			<div class="form-check form-switch">
-				<input class="form-check-input" type="checkbox" id="themeSwitch">
-				<label class="form-check-label" for="themeSwitch">Toggle Dark Mode</label>
+			<div class="custom-control custom-switch" style="margin-left : 10px">
+				<input type="checkbox" class="custom-control-input" id="themeSwitch">
+				<label class="custom-control-label" for="themeSwitch">Dark mode</label>
 			</div>
 
 			<div class="console" id="console">
@@ -53,20 +53,43 @@
 		  
 			// Check local storage for saved theme preference
 			if (localStorage.getItem('theme') === 'dark') {
-			  document.body.classList.add('dark-theme');
-			  themeSwitch.checked = true;
+				document.body.classList.add('dark-theme');
+				themeSwitch.checked = true;
+				setDarkModeStyles();
 			}
 		  
 			// Event listener for the theme switch
 			themeSwitch.addEventListener('change', () => {
-			  if (themeSwitch.checked) {
-				document.body.classList.add('dark-theme');
-				localStorage.setItem('theme', 'dark');
-			  } else {
-				document.body.classList.remove('dark-theme');
-				localStorage.setItem('theme', 'light');
-			  }
+				if (themeSwitch.checked) {
+					document.body.classList.add('dark-theme');
+					localStorage.setItem('theme', 'dark');
+					setDarkModeStyles();
+				} else {
+					document.body.classList.remove('dark-theme');
+					localStorage.setItem('theme', 'light');
+					resetDarkModeStyles();
+				}
 			});
-		  </script>
+		
+			// Function to set dark mode styles
+			function setDarkModeStyles() {
+				document.querySelector('.bg-texture').style.background = 'linear-gradient(-45deg, #333 33%, transparent 0), linear-gradient(-45deg, #1a1a1a 100%, transparent 0)';
+				document.querySelector('.console').style.backgroundColor = '#000';
+				document.querySelector('.console').style.border = '2px solid #00ff00'; // Green border
+				document.body.style.fontFamily = 'Cascadia Code, sans-serif'; // Set font to Cascadia Code
+			}
+		
+			// Function to reset dark mode styles
+			function resetDarkModeStyles() {
+				document.querySelector('.bg-texture').style.background = 'linear-gradient(-45deg, var(--background-color2) 33%, transparent 0), linear-gradient(-45deg, var(--background-color1) 100%, transparent 0)';
+				document.querySelector('.console').style.backgroundColor = 'var(--light)';
+				document.querySelector('.console').style.border = 'none'; // Reset border
+				document.body.style.fontFamily = 'sans-serif'; // Reset font to default sans-serif
+			}
+		</script>
+		
+		
+		
+		
 	</body>
 </html>
