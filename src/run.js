@@ -3,7 +3,6 @@ const {
 	simulator,
 	downloads,
 	uploadEntries,
-	simulatorUVA,
 	uploadNotes,
 	arrows,
 } = require('@lsandini/cgmsim-lib');
@@ -11,20 +10,7 @@ const cron = require('node-cron');
 const { getPerlin } = require('./perlin');
 
 const ENV_FILE_NAME = 'params.json';
-//const env = process.env as EnvRunner;
-const defaultEnv = {
-	AGE: '53',
-	APISECRET: 'change_me_please!',
-	CARBS_ABS_TIME: '360',
-	CR: '10',
-	DIA: '6',
-	GENDER: 'Male',
-	ISF: '30',
-	LOG_LEVEL: 'info',
-	NIGHTSCOUT_URL: 'https://test2.oracle.cgmsim.com',
-	TP: '75',
-	WEIGHT: '84',
-};
+
 const readEnv = () => {
 	try {
 		const data = fs.readFileSync(ENV_FILE_NAME, 'utf8');
@@ -51,26 +37,23 @@ const saveEnv = (env) => {
 const startCron = (render) => {
 	// dotenv.config();
 	// const env = process.env as EnvRunner;
-	let _readEnv = readEnv();
-	if (!_readEnv) {
-		saveEnv(defaultEnv);
-		_readEnv = defaultEnv;
-	}
-	let env = { ...defaultEnv, ..._readEnv };
-	console.log('env', env);
-
-	const logLevel = env.LOG_LEVEL;
-	render.send('log1', 'CGMSIM started!');
-
+	render.send('log', 'CGMSIM started!');
 	function run() {
+		let _readEnv = readEnv();
+		if (!_readEnv || !_readEnv.NIGHTSCOUT_URL || !_readEnv.APISECRET) {
+			const msg =
+				'Open File - Settings, and configure the Nightscout parameters';
+			render.send('err', msg);
+			return;
+		}
+		let env = { ...defaultEnv, ..._readEnv };
+		const logLevel = env.LOG_LEVEL;
 		try {
-			render.send('log2', 'CGMSIM run');
-
+			render.send('log', 'CGMSIM run');
 			// Fetch data from Nightscout API
 			return downloads(env.NIGHTSCOUT_URL, env.APISECRET).then(function (down) {
 				const treatments = down.treatments;
 				const entries = down.entries;
-
 				// Simulate new data entry
 				const newEntry = simulator({
 					entries,
@@ -117,10 +100,7 @@ const startCron = (render) => {
 					return _logSgv;
 				}
 				let formattedSgv = Math.round(sgv).toFixed(0);
-				const colorizedSgv = logSgv(formattedSgv);
-				console.log('sgv:', colorizedSgv);
-				// console.log('formattedSgv:', formattedSgv);
-				render.send('log', formattedSgv);
+				render.send('sgv', formattedSgv);
 				render.send(
 					'noise',
 					'added noise ' + Math.round(noise.noise * 18 * 6).toFixed(0),
@@ -139,7 +119,7 @@ const startCron = (render) => {
 				}
 			});
 		} catch (e) {
-			render.send('log', 'Error2:' + JSON.stringify(e));
+			render.send('error', 'Error:' + JSON.stringify(e));
 			console.error(e);
 		}
 	}

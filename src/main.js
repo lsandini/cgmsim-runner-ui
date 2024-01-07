@@ -36,7 +36,7 @@ const createWindow = () => {
 			plugins: true,
 			nodeIntegration: true,
 			contextIsolation: false,
-			enableRemoteModule: true
+			enableRemoteModule: true,
 		},
 
 		width: 800,
@@ -73,7 +73,6 @@ const createWindow = () => {
         `);
 	});
 
-	//   console.log('icon', icon);
 	icon16 = icon16.resize({
 		height: 16,
 		width: 16,
@@ -145,7 +144,6 @@ const createFormWindow = () => {
 	});
 	ipcMain.on('form-submission', (event, data) => {
 		saveEnv(data);
-		console.log('env', data);
 		logger.send('log', 'Params saved!');
 		formWindow.close();
 	});
