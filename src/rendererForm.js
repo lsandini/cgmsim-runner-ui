@@ -10,10 +10,23 @@ document.querySelector('form').addEventListener('submit', function (e) {
 	}
 	ipcRenderer.send('form-submission', res);
 });
+const defaultEnv = {
+	AGE: '50',
+	APISECRET: '',
+	CARBS_ABS_TIME: '360',
+	CR: '10',
+	DIA: '6',
+	GENDER: 'Male',
+	ISF: '30',
+	LOG_LEVEL: 'info',
+	NIGHTSCOUT_URL: '',
+	TP: '75',
+	WEIGHT: '80',
+};
 
 // Invia una richiesta asincrona al processo principale
 ipcRenderer.on('startForum', (event, params) => {
-	env = params;
+	env = { ...defaultEnv, ...params };
 	for (const p in env) {
 		const el = document.getElementById(p);
 		el.value = env[p];

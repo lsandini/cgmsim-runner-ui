@@ -46,80 +46,73 @@ const startCron = (render) => {
 			render.send('err', msg);
 			return;
 		}
-		let env = { ...defaultEnv, ..._readEnv };
+		let env = { ..._readEnv };
 		const logLevel = env.LOG_LEVEL;
 		try {
 			render.send('log', 'CGMSIM run');
 			// Fetch data from Nightscout API
-			return downloads(env.NIGHTSCOUT_URL, env.APISECRET).then(function (down) {
-				const treatments = down.treatments;
-				const entries = down.entries;
-				// Simulate new data entry
-				const newEntry = simulator({
-					entries,
-					profiles: [],
-					env,
-					treatments,
-					user: {
-						nsUrl: env.NIGHTSCOUT_URL,
-					},
-				});
-				let svgs = entries.map((e) => e.sgv);
-				if (svgs.length < 3) {
-					svgs = [...svgs, 90, 90, 90];
-				}
 
-				const noise = getPerlin();
-				const sgv = Math.round(noise.noise * 18 * 6 + newEntry.sgv);
-
-				// Calculate the direction using arrows
-				const { direction } = arrows(sgv, svgs[0], svgs[1], svgs[2]);
-
-				// Upload the new entry data to Nightscout
-				uploadEntries(
-					{
-						sgv: newEntry.sgv,
-						direction,
-					},
-					env.NIGHTSCOUT_URL,
-					env.APISECRET,
-				);
-
-				const now = new Date().toLocaleTimeString();
-
-				function logSgv(formattedSgv) {
-					let _logSgv = '';
-					if (sgv < 55 || sgv > 240) {
-						// Apply red color using ANSI escape codes
-						_logSgv = `\x1b[31m sgv ${formattedSgv} at ${now} \x1b[0m`; // 31 is the ANSI code for red
-					} else if (sgv < 75 || sgv > 180) {
-						_logSgv = `\x1b[33m sgv ${formattedSgv} at ${now} \x1b[0m at `; // 33 is the ANSI code for yellow
-					} else {
-						_logSgv = `\x1b[32m sgv${formattedSgv} at ${now} \x1b[0m at `; // 32 is the ANSI code for green
+			return downloads(env.NIGHTSCOUT_URL, env.APISECRET)
+				.then(function (down) {
+					const treatments = down.treatments;
+					const entries = down.entries;
+					// Simulate new data entry
+					const newEntry = simulator({
+						entries,
+						profiles: [],
+						env,
+						treatments,
+						user: {
+							nsUrl: env.NIGHTSCOUT_URL,
+						},
+					});
+					let svgs = entries.map((e) => e.sgv);
+					if (svgs.length < 3) {
+						svgs = [...svgs, 90, 90, 90];
 					}
-					return _logSgv;
-				}
-				let formattedSgv = Math.round(sgv).toFixed(0);
-				render.send('sgv', formattedSgv);
-				render.send(
-					'noise',
-					'added noise ' + Math.round(noise.noise * 18 * 6).toFixed(0),
-				);
 
-				// If log level is 'debug', upload additional notes
-				if (logLevel === 'debug') {
-					const notes = `
+					const noise = getPerlin();
+					const sgv = Math.round(noise.noise * 18 * 6 + newEntry.sgv);
+
+					// Calculate the direction using arrows
+					const { direction } = arrows(sgv, svgs[0], svgs[1], svgs[2]);
+
+					// Upload the new entry data to Nightscout
+					uploadEntries(
+						{
+							sgv: newEntry.sgv,
+							direction,
+						},
+						env.NIGHTSCOUT_URL,
+						env.APISECRET,
+					);
+
+					let formattedSgv = Math.round(sgv).toFixed(0);
+					render.send('sgv', formattedSgv);
+
+					render.send(
+						'noise',
+						'added noise ' + Math.round(noise.noise * 18 * 6).toFixed(0),
+					);
+
+					// If log level is 'debug', upload additional notes
+					if (logLevel === 'debug') {
+						const notes = `
 						sgv:${sgv}<br>
 						min:${newEntry.deltaMinutes}<br>
 						carb:${newEntry.carbsActivity.toFixed(4)}<br>
 						bas:${newEntry.basalActivity.toFixed(4)}<br>
 						bol:${newEntry.bolusActivity.toFixed(4)}<br>
 						liv:${newEntry.liverActivity.toFixed(4)}<br>`;
-					uploadNotes(notes, env.NIGHTSCOUT_URL, env.APISECRET);
-				}
-			});
+						uploadNotes(notes, env.NIGHTSCOUT_URL, env.APISECRET);
+					}
+				})
+				.catch((e) => {
+					render.send('err', e);
+					console.error(e);
+				});
 		} catch (e) {
-			render.send('error', 'Error:' + JSON.stringify(e));
+			render.send('err', 'Error:' + JSON.stringify(e));
 			console.error(e);
 		}
 	}
