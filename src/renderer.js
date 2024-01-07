@@ -7,24 +7,41 @@ function addToConsole(text) {
 	consoleElement.appendChild(message);
 	consoleElement.scrollTop = consoleElement.scrollHeight;
 }
+function addToConsoleError(text) {
+	const messageDiv = document.createElement('div');
+	messageDiv.className = 'console-message';
 
+	// Create a span for the user prompt
+	const userPromptSpan = document.createElement('span');
+	userPromptSpan.textContent = `user@localhost:~$ `;
+	// Create a span for the colorized sgv value
+	const sgvSpan = document.createElement('span');
+	sgvSpan.classList.add('red-text');
+	sgvSpan.textContent = text;
+	// Append the user prompt, "svg: " span, the colorized sgv span, and the local time span to the message div
+	messageDiv.appendChild(userPromptSpan);
+	messageDiv.appendChild(document.createTextNode(' '));
+	messageDiv.appendChild(sgvSpan);
+	consoleElement.appendChild(messageDiv);
+	consoleElement.scrollTop = consoleElement.scrollHeight;
+}
 // Invia una richiesta asincrona al processo principale
 ipcRenderer.send('im-ready', 'Dati da inviare');
 
 // Gestisci la risposta dal processo principale
-ipcRenderer.on('log1', (event, message) => {
+ipcRenderer.on('log', (event, message) => {
 	addToConsole(message);
 });
 
-ipcRenderer.on('log2', (event, message) => {
-	addToConsole(message);
+ipcRenderer.on('err', (event, message) => {
+	addToConsoleError(message);
 });
 
 ipcRenderer.on('noise', (event, message) => {
 	addToConsole(message);
 });
 
-ipcRenderer.on('log', (event, sgvValue) => {
+ipcRenderer.on('svg', (event, sgvValue) => {
 	const messageDiv = document.createElement('div');
 	messageDiv.className = 'console-message';
 
