@@ -41,7 +41,7 @@ ipcRenderer.on('noise', (event, message) => {
 	addToConsole(message);
 });
 
-ipcRenderer.on('svg', (event, sgvValue) => {
+ipcRenderer.on('sgv', (event, sgvValue) => {
 	const messageDiv = document.createElement('div');
 	messageDiv.className = 'console-message';
 
