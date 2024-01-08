@@ -2,7 +2,10 @@
 <html>
 	<head>
 		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self';" /> -->
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-abc123' 'nonce-def456'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; script-src 'self' 'nonce-abc123' 'nonce-def456'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+		/>
 
 		<title>CGMSIM runner</title>
 
@@ -12,17 +15,16 @@
 				color: #00ff00;
 				font-family: monospace;
 				padding: 10px;
-			}	
+			}
 		</style>
 
 		<!-- Bootstrap CSS -->
 		<!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
-		<link rel="stylesheet" href="./src/style-short.css">
+		<link rel="stylesheet" href="./src/style-short.css" />
 
 		<!-- Custom Stylesheet -->
 		<!-- <link rel="stylesheet" type="text/css" href="./src/style.css" /> -->
 	</head>
-
 
 	<body>
 		<!--header-->
@@ -30,13 +32,16 @@
 
 		<!--main section-->
 		<section class="bg-texture hero">
-
 			<!-- Console -->
 			<div class="console" id="console">
 				<div class="row console-row">
 					<div class="col-md-8">Welcome to the CGMSIM Console</div>
 					<div class="col-md-4 custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="themeSwitch">
+						<input
+							type="checkbox"
+							class="custom-control-input"
+							id="themeSwitch"
+						/>
 						<label class="custom-control-label" for="themeSwitch">
 							<span class="switch-label-dark">switch to Dark mode</span>
 							<span class="switch-label-light">switch to Light mode</span>
@@ -47,7 +52,6 @@
 
 			<!-- You can also require other files to run in this process -->
 			<script nonce="abc123" src="./src/renderer.js"></script>
-
 		</section>
 
 		<script nonce="def456">
@@ -59,7 +63,8 @@
 				themeSwitch.checked = true;
 				setDarkModeStyles();
 				// Change the label text when in dark mode
-				document.querySelector('.custom-control-label').textContent = 'switch to Light mode';
+				document.querySelector('.custom-control-label').textContent =
+					'switch to Light mode';
 			}
 
 			// Event listener for the theme switch
@@ -69,35 +74,36 @@
 					localStorage.setItem('theme', 'dark');
 					setDarkModeStyles();
 					// Change the label text when switching to dark mode
-					document.querySelector('.custom-control-label').textContent = 'switch to Light mode';
+					document.querySelector('.custom-control-label').textContent =
+						'switch to Light mode';
 				} else {
 					document.body.classList.remove('dark-theme');
 					localStorage.setItem('theme', 'light');
 					resetDarkModeStyles();
 					// Change the label text when switching to light mode
-					document.querySelector('.custom-control-label').textContent = 'switch to Dark mode';
+					document.querySelector('.custom-control-label').textContent =
+						'switch to Dark mode';
 				}
 			});
-		
+
 			// Function to set dark mode styles
 			function setDarkModeStyles() {
-				document.querySelector('.bg-texture').style.background = 'linear-gradient(-45deg, #333 33%, transparent 0), linear-gradient(-45deg, #1a1a1a 100%, transparent 0)';
+				document.querySelector('.bg-texture').style.background =
+					'linear-gradient(-45deg, #333 33%, transparent 0), linear-gradient(-45deg, #1a1a1a 100%, transparent 0)';
 				document.querySelector('.console').style.backgroundColor = '#000';
 				document.querySelector('.console').style.border = '1px solid #00ff00'; // Green border
 				document.body.style.fontFamily = 'Cascadia Code, sans-serif'; // Set font to Cascadia Code
 			}
-		
+
 			// Function to reset dark mode styles
 			function resetDarkModeStyles() {
-				document.querySelector('.bg-texture').style.background = 'linear-gradient(-45deg, var(--background-color2) 33%, transparent 0), linear-gradient(-45deg, var(--background-color1) 100%, transparent 0)';
-				document.querySelector('.console').style.backgroundColor = 'var(--light)';
+				document.querySelector('.bg-texture').style.background =
+					'linear-gradient(-45deg, var(--background-color2) 33%, transparent 0), linear-gradient(-45deg, var(--background-color1) 100%, transparent 0)';
+				document.querySelector('.console').style.backgroundColor =
+					'var(--light)';
 				document.querySelector('.console').style.border = '1px solid #ffffff'; // Reset border
-				document.body.style.fontFamily = 'sans-serif'; // Reset font to default sans-serif
+				document.body.style.fontFamily = 'Cascadia Code, sans-serif'; // Set font to Cascadia Code
 			}
 		</script>
-		
-		
-		
-		
 	</body>
 </html>
