@@ -41,7 +41,7 @@ const createWindow = () => {
 
 		width: 800,
 	});
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 
 	const template = [
 		{
