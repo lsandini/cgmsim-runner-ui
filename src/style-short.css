@@ -442,7 +442,7 @@ h2 {
 
 .hero {
 	padding: 30px;
-	height: 100vh;
+	height: 95vh;
 }
 
 section {
@@ -588,3 +588,24 @@ section {
     background-color:#1a1a1a;
     color:rgb(0, 255, 0);
   }
+
+.console {
+	background-color: var(--light);
+	padding: 10px;
+	font-size: 12px;
+	overflow-y: auto;
+	border-radius: 3px;
+}
+
+.custom-switch {
+	margin-left: 10px;
+}
+
+@media (min-width: 300px) {
+	.console-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
