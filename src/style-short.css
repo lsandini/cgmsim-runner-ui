@@ -623,3 +623,31 @@ section {
 .green-text {
 	color: var(--green);
 }
+
+/*ouline the switch in red when inactive*/
+.custom-control-input ~ .custom-control-label:before {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 0, 0, 1);
+}
+
+/*ouline the switch in red when active*/
+.custom-control-input:focus ~ .custom-control-label:before {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 0, 0, 1);
+}
+
+/* Light theme switch outline color */
+.light-theme .custom-control-input ~ .custom-control-label:before {
+    /* box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 179, 0, 1); */
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 0, 0, 1);
+}
+.light-theme .custom-control-input:focus ~ .custom-control-label:before {
+    /* box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 179, 0, 1); */
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 0, 0, 1);
+}
+
+/* Dark theme switch outline color */
+.dark-theme .custom-control-input ~ .custom-control-label:before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgb(0, 255, 0);
+}
+.dark-theme .custom-control-input:focus ~ .custom-control-label:before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgb(0, 255, 0);
+}
