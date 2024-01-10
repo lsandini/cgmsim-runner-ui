@@ -11,42 +11,69 @@
 				<div class="settings">
 					<div class="form-container">
 						<div class="form-label-group">
-							<input type="text" class="form-control" id="ISF" name="ISF" />
+							<input
+								type="number"
+								class="form-control"
+								id="ISF"
+								name="ISF"
+								step="1"
+								required
+							/>
 							<label for="ISF">Insulin Sensitivity Factor (ISF):</label>
 						</div>
 
 						<div class="form-label-group">
-							<input type="text" class="form-control" id="CR" name="CR" /><br />
+							<input
+								type="number"
+								class="form-control"
+								id="CR"
+								name="CR"
+								step="1"
+								required
+							/><br />
 							<label for="CR">Carb Ratio (CR):</label>
 						</div>
 						<div class="form-label-group">
 							<input
-								type="text"
+								type="number"
 								class="form-control"
 								id="WEIGHT"
 								name="WEIGHT"
+								step="1"
+								required
 							/><br />
 							<label for="WEIGHT">Weight (WEIGHT):</label>
 						</div>
 						<div class="form-label-group">
-							<input type="text" class="form-control" id="TP" name="TP" /><br />
+							<input
+								type="number"
+								class="form-control"
+								id="TP"
+								name="TP"
+								step="1"
+								required
+							/><br />
 							<label for="TP">Time of Peak (TP):</label>
 						</div>
 						<div class="form-label-group">
 							<input
-								type="text"
+								type="number"
 								class="form-control"
 								id="DIA"
 								name="DIA"
+								step="1"
+								required
 							/><br />
 							<label for="DIA">Duration of Insulin Action (DIA):</label>
 						</div>
 						<div class="form-label-group">
 							<input
-								type="text"
+								type="number"
 								class="form-control"
 								id="CARBS_ABS_TIME"
 								name="CARBS_ABS_TIME"
+								step="1"
+								required
 							/><br />
 							<label for="CARBS_ABS_TIME"
 								>Carb Absorption Time (CARBS_ABS_TIME):</label
@@ -58,6 +85,7 @@
 								class="form-control"
 								id="APISECRET"
 								name="APISECRET"
+								required
 							/><br />
 							<label for="APISECRET">API Secret (APISECRET):</label>
 						</div>
@@ -67,6 +95,7 @@
 								class="form-control"
 								id="NIGHTSCOUT_URL"
 								name="NIGHTSCOUT_URL"
+								required
 							/><br />
 							<label for="NIGHTSCOUT_URL"
 								>Nightscout URL (NIGHTSCOUT_URL):</label
@@ -74,10 +103,12 @@
 						</div>
 						<div class="form-label-group">
 							<input
-								type="text"
+								type="number"
 								class="form-control"
 								id="AGE"
 								name="AGE"
+								step="1"
+								required
 							/><br />
 							<label for="AGE">Age (AGE):</label>
 						</div>
