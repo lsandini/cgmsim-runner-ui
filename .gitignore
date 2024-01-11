@@ -1,6 +1,6 @@
 # deploy.sh
 tsconfig.json
-noise.json
+
 
 # Logs
 logs
@@ -134,3 +134,4 @@ dist
 .pnp.*
 release
 params.json
+noise.json
