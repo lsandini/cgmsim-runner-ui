@@ -46,7 +46,30 @@ const startCron = (render) => {
 			render.send('err', msg);
 			return;
 		}
-		let env = { ..._readEnv };
+		// let env = { ..._readEnv };
+		let env = {
+			..._readEnv,
+			ISF: parseInt(_readEnv.ISF),
+			CR: parseInt(_readEnv.CR),
+			DIA: parseInt(_readEnv.DIA),
+			WEIGHT: parseInt(_readEnv.WEIGHT),
+			TP: parseInt(_readEnv.TP),
+			CARBS_ABS_TIME: parseInt(_readEnv.CARBS_ABS_TIME),
+			AGE: parseInt(_readEnv.AGE),
+			GENDER: _readEnv.GENDER,
+		};
+		if (
+			isNaN(env.ISF) ||
+			isNaN(env.CR) ||
+			isNaN(env.DIA) ||
+			isNaN(env.WEIGHT) ||
+			isNaN(env.TP) ||
+			isNaN(env.CARBS_ABS_TIME) ||
+			isNaN(env.AGE)
+		) {
+			render.send('err', `Error: params ${JSON.stringify(env)}`);
+			return;
+		}
 		const logLevel = env.LOG_LEVEL;
 		try {
 			render.send('log', 'CGMSIM run');

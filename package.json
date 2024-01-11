@@ -25,7 +25,8 @@
 	},
 	"dependencies": {
 		"@electron/remote": "^2.0.12",
-		"@lsandini/cgmsim-lib": "^0.2.1",
+		"@lsandini/cgmsim-lib": "^0.3.0",
+		"bootstrap": "^5.3.2",
 		"electron-squirrel-startup": "^1.0.0",
 		"fs": "^0.0.1-security",
 		"node-cron": "^3.0.2",

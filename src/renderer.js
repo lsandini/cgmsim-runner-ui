@@ -94,3 +94,58 @@ ipcRenderer.on('sgv', (event, sgvValue) => {
 ipcRenderer.on('start', (event, scheduler) => {
 	console.log('start');
 });
+
+
+const themeSwitch = document.getElementById('themeSwitch');
+
+// Check local storage for saved theme preference
+if (localStorage.getItem('theme') === 'dark') {
+	document.body.classList.add('dark-theme');
+	themeSwitch.checked = true;
+	setDarkModeStyles();
+	// Change the label text when in dark mode
+	document.querySelector('.switch-label-dark').style.display = 'inline-block';
+	document.querySelector('.switch-label-light').style.display = 'none';
+} else {
+	// Set default to light mode
+	document.querySelector('.switch-label-dark').style.display = 'none';
+	document.querySelector('.switch-label-light').style.display = 'inline-block';
+}
+
+// Event listener for the theme switch
+themeSwitch.addEventListener('change', () => {
+	if (themeSwitch.checked) {
+		document.body.classList.add('dark-theme');
+		localStorage.setItem('theme', 'dark');
+		setDarkModeStyles();
+		// Change the label text when switching to dark mode
+		document.querySelector('.switch-label-dark').style.display = 'inline-block';
+		document.querySelector('.switch-label-light').style.display = 'none';
+	} else {
+		document.body.classList.remove('dark-theme');
+		localStorage.setItem('theme', 'light');
+		resetDarkModeStyles();
+		// Change the label text when switching to light mode
+		document.querySelector('.switch-label-dark').style.display = 'none';
+		document.querySelector('.switch-label-light').style.display = 'inline-block';
+	}
+});
+
+// Function to set dark mode styles
+function setDarkModeStyles() {
+	document.querySelector('.bg-texture').style.background =
+		'linear-gradient(-45deg, #333 33%, transparent 0), linear-gradient(-45deg, #1a1a1a 100%, transparent 0)';
+	document.querySelector('.console').style.backgroundColor = '#000';
+	document.querySelector('.console').style.border = '1px solid #00ff00'; // Green border
+	document.body.style.fontFamily = 'Cascadia Code, sans-serif'; // Set font to Cascadia Code
+}
+
+// Function to reset dark mode styles
+function resetDarkModeStyles() {
+	document.querySelector('.bg-texture').style.background =
+		'linear-gradient(-45deg, var(--background-color2) 33%, transparent 0), linear-gradient(-45deg, var(--background-color1) 100%, transparent 0)';
+	document.querySelector('.console').style.backgroundColor =
+		'var(--light)';
+	document.querySelector('.console').style.border = '1px solid #ffffff'; // Reset border
+	document.body.style.fontFamily = 'Cascadia Code, sans-serif'; // Set font to Cascadia Code
+}

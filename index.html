@@ -1,32 +1,63 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self';" />
+<head>
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'nonce-abc123' 'nonce-def456'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+    />
 
-		<title>CGMSIM runner</title>
-		<style>
-			body {
-				background-color: #000;
-				color: #00ff00;
-				font-family: monospace;
-				padding: 10px;
-			}
-		</style>
-		<link rel="stylesheet" type="text/css" href="./src/style.css" />
-	</head>
-	<body>
-		<!--header-->
-		<h2 class="main-title">CGMSIM v.3 Runner</h2>
-		<div class="canvas"></div>
+    <title>CGMSIM runner</title>
 
-		<!--main section-->
-		<section class="bg-texture hero pt-5">
-			<div class="console" id="console">
-				<div>Welcome to the CGMSIM Console</div>
-				<!-- <div class="prompt">user@localhost:~$ </div> -->
-			</div>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: monospace;
+            padding: 10px;
+        }
 
-			<script src="./src/renderer.js"></script>
-		</section>
-	</body>
+        .switch-label-dark {
+            display: none; /* Hide the "dark" label by default */
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./src/style-short.css" />
+
+    <!-- Custom Stylesheet -->
+    <!-- <link rel="stylesheet" type="text/css" href="./src/style.css" /> -->
+</head>
+
+<body>
+    <!--header-->
+    <h2 class="main-title">CGMSIM v.3 Runner</h2>
+    <div class="canvas"></div>
+
+    <!--main section-->
+    <section class="bg-texture hero">
+        <!-- Console -->
+        <div class="console" id="console">
+            <div class="row console-row">
+                <div class="col-md-8">Welcome to the CGMSIM Console</div>
+                <div class="col-md-4 custom-control custom-switch">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="themeSwitch"
+                    />
+                    <label class="custom-control-label" for="themeSwitch">
+                        <span class="switch-label-light">switch to Dark mode </span>
+                        <span class="switch-label-dark">switch to Light mode</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <script nonce="abc123" src="./src/renderer.js"></script>
+    </section>
+
+    <!-- <script nonce="def456">
+
+    </script> -->
+</body>
 </html>

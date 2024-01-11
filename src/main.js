@@ -36,10 +36,12 @@ const createWindow = () => {
 			plugins: true,
 			nodeIntegration: true,
 			contextIsolation: false,
+			enableRemoteModule: true,
 		},
 
 		width: 800,
 	});
+	// mainWindow.webContents.openDevTools();
 
 	const template = [
 		{
