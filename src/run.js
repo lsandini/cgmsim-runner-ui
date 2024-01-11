@@ -48,6 +48,7 @@ const startCron = (render) => {
 		}
 		// let env = { ..._readEnv };
 		let env = {
+			..._readEnv,
 			ISF: parseInt(_readEnv.ISF),
 			CR: parseInt(_readEnv.CR),
 			DIA: parseInt(_readEnv.DIA),
