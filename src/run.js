@@ -47,7 +47,7 @@ const startCron = (render) => {
 			return;
 		}
 		// let env = { ..._readEnv };
-		let env = {
+		let patient = {
 			..._readEnv,
 			ISF: parseInt(_readEnv.ISF),
 			CR: parseInt(_readEnv.CR),
@@ -59,23 +59,23 @@ const startCron = (render) => {
 			GENDER: _readEnv.GENDER,
 		};
 		if (
-			isNaN(env.ISF) ||
-			isNaN(env.CR) ||
-			isNaN(env.DIA) ||
-			isNaN(env.WEIGHT) ||
-			isNaN(env.TP) ||
-			isNaN(env.CARBS_ABS_TIME) ||
-			isNaN(env.AGE)
+			isNaN(patient.ISF) ||
+			isNaN(patient.CR) ||
+			isNaN(patient.DIA) ||
+			isNaN(patient.WEIGHT) ||
+			isNaN(patient.TP) ||
+			isNaN(patient.CARBS_ABS_TIME) ||
+			isNaN(patient.AGE)
 		) {
-			render.send('err', `Error: params ${JSON.stringify(env)}`);
+			render.send('err', `Error: params ${JSON.stringify(patient)}`);
 			return;
 		}
-		const logLevel = env.LOG_LEVEL;
+		const logLevel = patient.LOG_LEVEL;
 		try {
 			render.send('log', 'CGMSIM run');
 			// Fetch data from Nightscout API
 
-			return downloads(env.NIGHTSCOUT_URL, env.APISECRET)
+			return downloads(patient.NIGHTSCOUT_URL, patient.APISECRET)
 				.then(function (down) {
 					const treatments = down.treatments;
 					const entries = down.entries;
@@ -83,10 +83,10 @@ const startCron = (render) => {
 					const newEntry = simulator({
 						entries,
 						profiles: [],
-						env,
+						patient,
 						treatments,
 						user: {
-							nsUrl: env.NIGHTSCOUT_URL,
+							nsUrl: patient.NIGHTSCOUT_URL,
 						},
 					});
 					let svgs = entries.map((e) => e.sgv);
@@ -106,8 +106,8 @@ const startCron = (render) => {
 							sgv: newEntry.sgv,
 							direction,
 						},
-						env.NIGHTSCOUT_URL,
-						env.APISECRET,
+						patient.NIGHTSCOUT_URL,
+						patient.APISECRET,
 					);
 
 					let formattedSgv = Math.round(sgv).toFixed(0);
@@ -127,7 +127,7 @@ const startCron = (render) => {
 						bas:${newEntry.basalActivity.toFixed(4)}<br>
 						bol:${newEntry.bolusActivity.toFixed(4)}<br>
 						liv:${newEntry.liverActivity.toFixed(4)}<br>`;
-						uploadNotes(notes, env.NIGHTSCOUT_URL, env.APISECRET);
+						uploadNotes(notes, patient.NIGHTSCOUT_URL, patient.APISECRET);
 					}
 				})
 				.catch((e) => {
