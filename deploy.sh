@@ -1,5 +1,5 @@
 #!/bin/bash
 
 git add .
-git commit -m "dark mode fixes III"
-git push -u origin styles
+git commit -m "lib version in TitleBar"
+git push -u origin npm-lib

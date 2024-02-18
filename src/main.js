@@ -11,6 +11,7 @@ if (require('electron-squirrel-startup')) {
 	return;
 }
 const path = require('path');
+const fs = require('fs');
 const { readEnv, saveEnv, startCron } = require('./run');
 
 let mainWindow;
@@ -41,8 +42,27 @@ const createWindow = () => {
 
 		width: 800,
 	});
-	// mainWindow.webContents.openDevTools();
+	
+	//mainWindow.webContents.openDevTools();
 
+	// Read package.json file
+	const appPath = app.getAppPath();
+	const packageJsonPath = path.join(appPath, 'package.json');
+
+	try {
+		const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
+		const cgmsimLibVersion = packageJson.dependencies["@lsandini/cgmsim-lib"];
+	
+		// Set the window title with the version of @lsandini/cgmsim-lib
+		mainWindow.setTitle(`CGMSIM runner - @lsandini/cgmsim-lib v${cgmsimLibVersion}`);
+		
+		// Set the dynamic title in the HTML
+		mainWindow.webContents.executeJavaScript(`document.getElementById('dynamicTitle').innerText = 'CGMSIM runner - @lsandini/cgmsim-lib v${cgmsimLibVersion}'`);
+	} catch (error) {
+		console.error('Error reading package.json:', error);
+	}
+	
+	// Create the Application's main menu
 	const template = [
 		{
 			label: 'File',
