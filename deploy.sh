@@ -1,5 +1,5 @@
 #!/bin/bash
 
 git add .
-git commit -m "update readme"
-git push -u origin npm-lib
+git commit -m "sonaqube test"
+git push -u origin main
